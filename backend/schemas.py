@@ -3,6 +3,7 @@ import pydantic as _pydantic
 
 
 class _UserBase(_pydantic.BaseModel):
+    model_config = _pydantic.ConfigDict(from_attributes=True)
     email: str
 
 

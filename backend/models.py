@@ -11,7 +11,7 @@ class User(_database.Base):
     email = _sa.Column(_sa.String, unique=True, index=True)
     hashed_password = _sa.Column(_sa.String)
 
-    leads = _orm.relationship("Lead", back_populates="user")
+    leads = _orm.relationship("Lead", back_populates="owner")
 
     def verify_password(self, password: str):
         return _hash.bcrypt.verify(password, self.hashed_password)
@@ -20,6 +20,7 @@ class User(_database.Base):
 class Lead(_database.Base):
     __tablename__ = "leads"
     id = _sa.Column(_sa.Integer, primary_key=True, index=True)
+    owner_id = _sa.Column(_sa.Integer, _sa.ForeignKey("users.id"))
     first_name = _sa.Column(_sa.String, index=True)
     last_name = _sa.Column(_sa.String, index=True)
     email = _sa.Column(_sa.String, index=True)
